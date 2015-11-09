@@ -1,6 +1,6 @@
 <?php $isAdmin = Auth::user()->role == 'admin' ? TRUE : FALSE; ?>
 
-<div class="navbar-default sidebar" role="navigation" style="margin-top: 64px;">
+<div class="navbar-default sidebar" role="navigation" style="margin-top: 64px; min-height: 600px !important; overflow-y: scroll;">
     <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
             <li>
