@@ -12,7 +12,7 @@
                 <ul class="nav nav-second-level">
                 
                     <li>
-                        <a href="javascript:void(0);" data-toggle = "modal" data-target = "#addUserModal">Add</a>
+                        <a href="#" data-toggle = "modal" data-target = "#addUserModal">Add</a>
                     </li>
                 
                     <li>
