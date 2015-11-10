@@ -24,11 +24,11 @@
             <li>
                 <a href="{{ url('admin/colleges') }}"><i class="fa fa-folder"></i> Colleges<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                @if( $isAdmin )
+                
                     <li>
                         <a href="javascript:void(0);" data-toggle = "modal" data-target = "#addCollegeModal">Add</a>
                     </li>
-                @endif
+               
                     <li>
                         <a href="{{ url('admin/colleges') }}">View/Update</a>
                     </li>
@@ -37,11 +37,11 @@
             <li>
                 <a href="{{ url('admin/courses') }}"><i class="fa fa-book"></i>  Courses<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                @if( $isAdmin )
+                
                     <li>
                         <a href="javascript:void(0);" data-toggle = "modal" data-target = "#mainAddCourseModal">Add</a>
                     </li>
-                @endif
+                
                     <li>
                         <a href="{{ url('admin/courses') }}">View/Update</a>
                     </li>
@@ -50,17 +50,17 @@
             <li>
                 <a href="{{ url('admin/scholarships') }}"><i class="fa fa-graduation-cap"></i> Scholarships<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
-                @if( $isAdmin )
+                
                     <li>
                         <a href="javascript:void(0);" data-toggle = "modal" data-target = "#addScholarshipModal">Add</a>
                     </li>
-                @endif
+                
                     <li>
                         <a href="{{ url('admin/scholarships') }}">View/Update</a>
                     </li>
                 </ul>
             </li>
-            @if( $isAdmin )
+            
             <li>
                 <a href="asdf"><i class="fa fa-files-o fa-fw"></i> Add Student Record<span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level">
@@ -94,7 +94,7 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
-            @endif
+            
             <li>
                 <a href="{{ url('admin/student-records') }}"><i class="fa fa-table fa-fw"></i> View/Update Student Records </a>
             </li>

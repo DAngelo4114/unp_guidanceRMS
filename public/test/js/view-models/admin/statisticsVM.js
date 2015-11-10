@@ -6,7 +6,30 @@
 		statisticsVM = {
 			genderPopPerCollege: ko.observable(),
 		};
+	function PerScholarship(data) {
+		var _labels = [],
+			_datas = [],
+			_datasets = [];
 
+		ko.utils.arrayMap(data, function(d) {
+			_labels.push(d.name);
+			_datas.push(d.pop);
+		});
+		var obj = {
+			labels: _labels,
+			datasets: [{
+				label: "Female",
+				fillColor: "#fda465",
+				strokeColor: "#000",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data: _datas
+			}]
+		}
+
+
+		return obj;
+	}
 	function PerCollege(data) {
 		var _labels = [],
 			_datas = [],
@@ -244,7 +267,7 @@
 
 		var genderPerCollegeChart = new Chart(genderPerCollegeCTX).Bar(new __barChart(genderPerCollegesData)),
 			perCollegeChart = new Chart(perCollegeCTX).Bar(new PerCollege(perCollegeData)),
-			perScholarshipChart = new Chart(perScholarshipCTX).Bar(new PerCollege(perScholarshipData)),
+			perScholarshipChart = new Chart(perScholarshipCTX).Bar(new PerScholarship(perScholarshipData)),
 			genderWholeChart = new Chart(genderWholeCTX).Pie(new pie(['Male', 'Female', 'Gay', 'Lesbian', 'Bisexual', 'Transgender'], [genderWholeData.male_pop,
 				genderWholeData.female_pop, genderWholeData.gay_pop, genderWholeData.lesbian_pop, genderWholeData.bisexual_pop, genderWholeData.transgender_pop
 			])),
