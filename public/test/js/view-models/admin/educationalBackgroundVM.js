@@ -2,18 +2,19 @@
 (function(w, ko) {
 	"use strict";
 
-	function field(id) {
-		var obj = {
-			student_id: id,
-			level: ko.observable(),
-			school_name_address: ko.observable(),
-			degree_course: ko.observable(),
-			year_graduated: ko.observable(),
-			date_from: ko.observable(),
-			date_to: ko.observable(),
-			general_average: ko.observable(),
-			awards: ko.observable(),
-		}
+	function field(_id, _level) {
+		var level = _level || '',
+			obj = {
+				student_id: _id,
+				level: ko.observable(level),
+				school_name_address: ko.observable(),
+				degree_course: ko.observable(),
+				year_graduated: ko.observable(),
+				date_from: ko.observable(),
+				date_to: ko.observable(),
+				general_average: ko.observable(),
+				awards: ko.observable(),
+			}
 		return obj;
 	}
 
@@ -55,10 +56,16 @@
 		},
 		me = educationalBackgroundVM,
 		success, warning, error;
-
+	me.hasSelectedStudent = ko.pureComputed(function() {
+		if (me.student_id()) {
+			return true;
+		} else {
+			return false;
+		}
+	});
 	me.student_id.subscribe(function() {
 		if (me.student_id()) {
-			me.fields([new field(me.student_id().id)]);
+			me.fields([new field(me.student_id())]);
 		}
 		// localStorage['lastStudentAdded'] = ko.toJSON(me.student_id());
 	});
@@ -80,7 +87,7 @@
 		}
 	});
 	me.addField = function() {
-		me.fields.push(new field(me.student_id().id));
+		me.fields.push(new field(me.student_id()));
 	};
 	me.removeField = function(thisField) {
 		me.fields.remove(thisField);
@@ -196,6 +203,9 @@
 						sticker: false
 					}
 				});
+				if (parseInt(localStorage['lastStudentAdded']) > 0) {
+					w.location.href = 'add-family-background';
+				}
 			}
 
 		}).fail(function() {
@@ -271,7 +281,10 @@
 		setTimeout(function() {
 			var id = parseInt(localStorage['lastStudentAdded']);
 			me.student_id(id);
-			// console.log(me.student_id());
+			me.fields([
+				new field(me.student_id(), 'Elementary'),
+				new field(me.student_id(), 'Secondary')
+			]);
 		}, 600);
 	});
 	w.RMS.VM.educationalBackgroundVM = me;

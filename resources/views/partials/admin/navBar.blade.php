@@ -6,7 +6,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{ url('/admin/dashboard') }}">Guidance Office Record Management System</a>
+        <a class="navbar-brand" href="{{ url('/admin/dashboard') }}">GCS RMS</a>
     </div>
     <!-- /.navbar-header -->
 

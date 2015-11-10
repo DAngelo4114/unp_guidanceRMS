@@ -45,8 +45,8 @@ class PersonalInfoController extends Controller
         }
     }
     public function postStore(){
-        $id = Student::create(Input::all());
-        return $id;    	
+        $last = Student::create(Input::all());
+        return $last->id;    	
     }
 
     public function getRecord( $id ){

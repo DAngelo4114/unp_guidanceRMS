@@ -7,6 +7,7 @@
 		role:ko.observable(),
 		name: ko.observable(),
 		password: ko.observable(),
+		passwordRetype: ko.observable(),
 		userInfo : ko.observableArray(),
 		updateID : ko.observable(),
 	}, me = userVM, success, warning , error;

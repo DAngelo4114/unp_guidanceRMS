@@ -28,7 +28,7 @@
 
 		
 	};
-
+	
 
 	me.edit = function( id ) {
 		var data = ko.utils.arrayFilter( w.RMS.VM.datas.students(), function( student ){

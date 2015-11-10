@@ -12,7 +12,8 @@
 					<div class="form-group">
 						<div class="col-md-6">
 							<label for="" class="text-primary">Select Student</label>
-							<select data-bind = "options: $root.datas.students, optionsText: function(s){ return s.lname + ', ' + s.fname + ' ' +s.mname; }, optionsCaption:'Select Student',value: student_id" class="form-control">
+							<select data-bind = "options: $root.datas.students, optionsText: studentFullName, optionsValue:'id',
+								optionsCaption:'Select Student',value: student_id" class="form-control">
 							</select>
 						</div>
 					</div>

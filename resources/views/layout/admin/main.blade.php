@@ -115,8 +115,9 @@
     <script src="{{ asset('test/js/view-models/admin/courseVM.js') }}"></script>
     <script src="{{ asset('test/js/view-models/admin/scholarshipVM.js') }}"></script>
     <script src="{{ asset('test/js/view-models/admin/studentRecordsVM.js') }}"></script>
-
+    @if(Request::segment(2) == 'statistics')
     <script src="{{ asset('test/js/view-models/admin/statisticsVM.js') }}"></script>
+    @endif
     <script src="{{ asset('test/js/view-models/admin/userVM.js') }}"></script>
     <script src="{{ asset('test/js/view-models/admin/allDataObjects.js') }}"></script>
     <script src="{{ asset('test/js/view-models/admin/masterViewModel.js') }}"></script>
@@ -144,7 +145,7 @@
                 $( 'input', this.footer() ).on( 'keyup change', function () {
                     if ( that.search() !== this.value ) {
                         that
-                            .search( this.value )
+                            .search( this.value, false, true )
                             .draw();
                     }
                 } );

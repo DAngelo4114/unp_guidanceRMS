@@ -10,9 +10,8 @@
 			<img src="{{ asset('img/unpv2.PNG') }}" width="350" height="260" alt="">
 		</div>
 		<div class="col-md-8">
-			<h1>UNP-Guidance</h1>
-			<h1>Record Management</h1>
-			<h1>System</h1>
+			<h1>GUIDANCE AND COUNSELING SERVICES</h1>  
+			<h1>RECORD MANAGEMENT SYSTEM</h1>
 		</div>
 	</div>
 </div>

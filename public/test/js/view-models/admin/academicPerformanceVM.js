@@ -1,82 +1,95 @@
-;( function (w, ko){
+;
+(function(w, ko) {
 	"use strict";
 
-	function academicPerformanceField(){
-		
+	function academicPerformanceField() {
+
 		var obj = {
-			year_level : ko.observable(),
-			semester : ko.observable(),
-			remark : ko.observable(),
-			subject : ko.observable(),
+			year_level: ko.observable(),
+			semester: ko.observable(),
+			remark: ko.observable(),
+			subject: ko.observable(),
 		}
 		return obj;
 	}
 
-	function editAcademicPerformanceField(data){
-		
-		var d = data, obj = {
-			id: d.id,
-			year_level : ko.observable(d.year_level),
-			semester : ko.observable(d.semester),
-			remark : ko.observable(d.remark),
-			subject : ko.observable(d.subject),
-		}
+	function editAcademicPerformanceField(data) {
+
+		var d = data,
+			obj = {
+				id: d.id,
+				year_level: ko.observable(d.year_level),
+				semester: ko.observable(d.semester),
+				remark: ko.observable(d.remark),
+				subject: ko.observable(d.subject),
+			}
 		return obj;
 	}
 
 
-	var x = w.RMS.XHR, _base = w.RMS.baseUrl,
-		academicPerformanceVM ={
-			student_id : ko.observable(),
+	var x = w.RMS.XHR,
+		_base = w.RMS.baseUrl,
+		academicPerformanceVM = {
+			student_id: ko.observable(),
 			academicPerformanceFields: ko.observableArray([new academicPerformanceField()]),
-		}, me = academicPerformanceVM;
-
-	me.canAddField = ko.pureComputed( function(){
-		if(me.academicPerformanceFields().length < 15){
+		},
+		me = academicPerformanceVM;
+	me.hasSelectedStudent = ko.pureComputed(function() {
+		if (me.student_id()) {
 			return true;
-		}else{
+		} else {
+			return false;
+		}
+	});
+	me.studentFullName = function(s) {
+		return s.lname + ', ' + s.fname + ' ' + s.mname;
+	};
+	me.canAddField = ko.pureComputed(function() {
+		if (me.academicPerformanceFields().length < 15) {
+			return true;
+		} else {
 			return false;
 		}
 	});
 
-	me.addField = function(){
+	me.addField = function() {
 		me.academicPerformanceFields.push(new academicPerformanceField());
 	}
 
-	me.canRemoveField = ko.pureComputed( function() {
-		if(me.academicPerformanceFields().length !== 1){
+	me.canRemoveField = ko.pureComputed(function() {
+		if (me.academicPerformanceFields().length !== 1) {
 			return true
-		}else{
+		} else {
 			return false;
 		}
 	});
 
-	me.removeField = function( field ){
-		me.academicPerformanceFields.remove( field );
+	me.removeField = function(field) {
+		me.academicPerformanceFields.remove(field);
 	}
 
-	me.removeFieldFromDB = function(field){
+	me.removeFieldFromDB = function(field) {
 		(new PNotify({
-		    title: 'Confirmation Needed',
-		    text: 'Are you sure?',
-		    icon: 'glyphicon glyphicon-question-sign',
-		    hide: false,
-		    confirm: {
-		        confirm: true
-		    },
-		    buttons: {
-		        closer: false,
-		        sticker: false
-		    },
-		    history: {
-		        history: false
-		    },
-		    type: 'error'
+			title: 'Confirmation Needed',
+			text: 'Are you sure?',
+			icon: 'glyphicon glyphicon-question-sign',
+			hide: false,
+			confirm: {
+				confirm: true
+			},
+			buttons: {
+				closer: false,
+				sticker: false
+			},
+			history: {
+				history: false
+			},
+			type: 'error'
 		})).get().on('pnotify.confirm', function() {
-		    x.post( _base + "academic-performance/delete/"+ field.id).done( function ( response ){
-				if( response > 0 ){
-					me.academicPerformanceFields.remove( field );
-					if( me.academicPerformanceFields().length == 0 ){
+			x.post(_base + "academic-performance/delete/" + field.id).done(function(response) {
+				if (response > 0) {
+					me.academicPerformanceFields.remove(field);
+					if (me.academicPerformanceFields().length == 0) {
 						$("#editAcademicsModal").modal("hide");
 					}
 					new PNotify({
@@ -89,9 +102,9 @@
 					});
 
 
-					
+
 				}
-			}).fail( function(){
+			}).fail(function() {
 				new PNotify({
 					title: 'Whoops!',
 					text: 'Something went wrong.',
@@ -102,62 +115,72 @@
 				});
 			});
 		}).on('pnotify.cancel', function() {
-		    
+
 		});
-		
+
 	};
 
 
-	me.selectedStudent = ko.pureComputed( function() {
+	me.selectedStudent = ko.pureComputed(function() {
 		var s = me.student_id();
-		if(me.student_id()){
-			return s.lname + ', ' + s.fname + ' ' +s.mname;
-		}else{
-			return "(No Student Selected)";
+		if (me.student_id()) {
+			var student = ko.utils.arrayFilter(w.RMS.VM.datas.students(), function(student) {
+				return student.id == me.student_id();
+			});
+			student = student[0];
+			return student.lname + ", " + student.fname + " " + student.mname;
+		} else {
+			return "(No Student Selected)"
 		}
 	});
 
-	me.canSaveRecord = ko.pureComputed( function() {
-		if(me.student_id() &&  me.academicPerformanceFields()){
+	me.canSaveRecord = ko.pureComputed(function() {
+		if (me.student_id() && me.academicPerformanceFields()) {
 			return true;
 
-		}else{
+		} else {
 			return false;
 		}
 	});
-	
-	me.saveRecord = function(){
+
+	me.saveRecord = function() {
 		/*me.year_graduated = $("#year_graduated").val();
 		me.attendance_date_from = $("#attendance_date_from").val();
 		me.attendance_date_to = $("#attendance_date_to").val();*/
-		$.each(me.academicPerformanceFields(), function(){
-			this.student_id = me.student_id().id;
+		$.each(me.academicPerformanceFields(), function() {
+			this.student_id = me.student_id();
 		});
 		var data = ko.toJS(me.academicPerformanceFields());
-		
-		x.post( _base + "academic-performance/store",{data}).done(function(res){
-			if(res == "OK"){
+
+		x.post(_base + "academic-performance/store", {
+			data
+		}).done(function(res) {
+			if (res == "OK") {
 				new PNotify({
 					title: 'Success!',
 					text: 'Academic Performance added!',
 					type: 'success'
 				});
+				if (parseInt(localStorage['lastStudentAdded']) > 0) {
+					w.location.href = 'add-organizational-affiliation';
+				}
 			}
+
 		});
 	};
 
-	me.edit = function(){
+	me.edit = function() {
 		me.academicPerformanceFields([]);
 		var id = w.RMS.VM.studentRecordsVM.targetID();
 
-		x.get( _base + "academic-performance/record/" + id ).done( function ( response ){
-			if( response.length ){
-				$.each( response, function(){
+		x.get(_base + "academic-performance/record/" + id).done(function(response) {
+			if (response.length) {
+				$.each(response, function() {
 					me.academicPerformanceFields.push(new editAcademicPerformanceField(this));
 				});
-				
+
 				$("#editAcademicsModal").modal("show");
-			}else{
+			} else {
 				new PNotify({
 					title: 'Warning!',
 					text: 'No Academic Performance Records Found!',
@@ -172,10 +195,12 @@
 
 
 
-	me.updateRecord = function(){
+	me.updateRecord = function() {
 		var data = ko.toJS(me.academicPerformanceFields())
-		x.post( _base + "academic-performance/update",{data}).done( function ( response ){
-			if( response == "OK"){
+		x.post(_base + "academic-performance/update", {
+			data
+		}).done(function(response) {
+			if (response == "OK") {
 				new PNotify({
 					title: 'Success!',
 					text: 'Updated!',
@@ -185,7 +210,7 @@
 					}
 				});
 			}
-		}).fail( function(){
+		}).fail(function() {
 			new PNotify({
 				title: 'Whoops!',
 				text: 'Something went wrong.',
@@ -196,5 +221,12 @@
 			});
 		});
 	};
+
+	$(window).load(function() {
+		setTimeout(function() {
+			var id = parseInt(localStorage['lastStudentAdded']);
+			me.student_id(id);
+		}, 700);
+	});
 	w.RMS.VM.academicPerformanceVM = academicPerformanceVM;
-}( window, ko));
+}(window, ko));

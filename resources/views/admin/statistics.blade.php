@@ -7,6 +7,19 @@
 		<div data-bind = "with: statisticsVM"  class="row">
 
 		<div class="panel panel-primary">
+		<div class="panel-heading">Population Per College</div>
+			<div class="panel-body">
+				<canvas id= "popPerCollege" width = "800" height = "250"></canvas>
+				<div id="legend4"></div>
+			</div>
+		</div>
+		<div class="panel panel-primary">
+		<div class="panel-heading">Population Per Scholarship</div>
+			<div class="panel-body">
+				<canvas id= "popPerScholarship" width = "800" height = "250"></canvas>
+			</div>
+		</div>
+		<div class="panel panel-primary">
 		<div class="panel-heading">Gender Population Per College</div>
 			<div class="panel-body">
 				<canvas id= "genderPerCollege" width = "800" height = "250"></canvas>

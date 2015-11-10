@@ -38,8 +38,9 @@ class AjaxSourceController extends Controller
             $genderPerColleges = DB::table('vw_genderbycolleges')->get();
             $genderWhole = DB::table('vw_genderWhole')->get();
             $byStatus = DB::table('vw_byStatus')->get();
-
-            return compact('genderPerColleges', 'genderWhole','byStatus');
+            $perCollege = DB::table('vw_percollege')->get();
+            $perScholarship = DB::table('vw_perscholarship')->get();
+            return compact('genderPerColleges', 'genderWhole','byStatus','perCollege','perScholarship');
         }
     }
     	

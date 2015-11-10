@@ -308,6 +308,14 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <div class="col-md-12">
+                <label for="scholarship-name" class="text-primary">Re-type Password</label>
+                <input data-bind = "textInput: passwordRetype" type="password" class="form-control" placeholder = "Re-type Password" minLength = "6"
+                maxlength="13" required>
+              </div>
+            </div>
+    
                 
             </div>
             <div class="modal-footer">
